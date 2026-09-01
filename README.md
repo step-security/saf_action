@@ -35,7 +35,7 @@ jobs:
     name: SAF CLI Convert ASFF to HDF
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Convert ASFF
         uses: step-security/saf_action@v1
         with:

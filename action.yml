@@ -1,5 +1,5 @@
 name: 'SAF CLI Action'
-author: The MITRE Corporation
+author: 'step-security'
 description: >
   Run SAF CLI commands
 branding:
@@ -11,4 +11,4 @@ inputs:
     required: true
 runs:
   using: 'node24'
-  main: 'index.js'
+  main: 'dist/index.js'

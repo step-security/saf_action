@@ -4,12 +4,13 @@
   "description": "GitHub Action for the [SAF CLI](https://github.com/mitre/saf)",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js -o dist --license licenses.txt",
     "test": "vitest",
     "test:ci": "vitest run"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mitre/saf_action.git"
+    "url": "git+https://github.com/step-security/saf_action.git"
   },
   "keywords": [
     "mitre-saf",
@@ -17,18 +18,20 @@
     "SAF",
     "actions"
   ],
-  "author": "The MITRE SAF",
+  "author": "step-security",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/mitre/saf_action/issues"
+    "url": "https://github.com/step-security/saf_action/issues"
   },
-  "homepage": "https://github.com/mitre/saf_action#readme",
+  "homepage": "https://github.com/step-security/saf_action#readme",
   "dependencies": {
     "@actions/core": "^2.0.1",
     "@mitre/saf": "^1.7.0",
+    "axios": "^1.19.0",
     "shell-quote": "^1.8.2"
   },
   "devDependencies": {
+    "@vercel/ncc": "^0.45.0",
     "vitest": "^4.0.16"
   }
 }
