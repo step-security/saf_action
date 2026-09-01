@@ -4,7 +4,7 @@
   "description": "GitHub Action for the [SAF CLI](https://github.com/mitre/saf)",
   "main": "index.js",
   "scripts": {
-    "build": "ncc build index.js -o dist --license licenses.txt",
+    "build": "esbuild index.js --bundle --platform=node --target=node24 --outfile=dist/index.js --external:@mitre/saf --external:@oclif",
     "test": "vitest",
     "test:ci": "vitest run"
   },
@@ -31,7 +31,7 @@
     "shell-quote": "^1.8.2"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.45.0",
+    "esbuild": "^0.28.2",
     "vitest": "^4.0.16"
   }
 }

@@ -38,10 +38,26 @@ async function validateSubscription() {
   }
 }
 
-const saf_action =  require('./run_command.js');
+const saf_action = require('./run_command.js');
 const path = require('node:path');
+const { spawnSync } = require('child_process');
+
+function ensureSafCLI() {
+  const safRoot = path.join(__dirname, 'node_modules', '@mitre', 'saf');
+  if (!fs.existsSync(safRoot)) {
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+    const version = pkg.dependencies['@mitre/saf'].replace(/^[^0-9]*/, '');
+    core.info(`Installing @mitre/saf@${version}...`);
+    const npmArgs = ['install', '--no-save', '--prefix', __dirname, `@mitre/saf@${version}`];
+    const result = process.platform === 'win32'
+      ? spawnSync('npm.cmd', npmArgs, { stdio: 'inherit', shell: true })
+      : spawnSync('npm', npmArgs, { stdio: 'inherit', shell: false });
+    if (result.status !== 0) throw new Error(`Failed to install @mitre/saf: exit code ${result.status}`);
+  }
+  return safRoot;
+}
 
 (async () => {
   await validateSubscription();
-  saf_action({safCLIPath: path.join(process.env.GITHUB_WORKSPACE, '../..', '_actions/', process.env.GITHUB_ACTION_REPOSITORY, process.env.GITHUB_ACTION_REF, 'node_modules/@mitre/saf/lib/index.js')});
+  saf_action({safRoot: ensureSafCLI()});
 })();

@@ -1,17 +1,9 @@
-const {resolve} = require('path');
+const path = require('path');
+const {spawnSync} = require('child_process');
 const core = require('@actions/core');
-const saf = require('@mitre/saf');
 const parse = require('shell-quote/parse');
 
-/**
- * Runs the provided 'command string' against the SAF CLI
- *
- * @param {Object} [options]
- * @param {string} [options.overrideCommand] - the command to run if one is not provided via environment variable
- * @param {string} [options.safCLIPath] - the path to the entrypoint of the SAF CLI
- * @return {Promise<unknown>} The result of running a command against an oclif cli tool
- */
-async function runCommand({overrideCommand, safCLIPath}) {
+async function runCommand({overrideCommand, safRoot}) {
     const command_string = core.getInput('command_string') || overrideCommand;
     if (!command_string) {
         throw new Error("SAF CLI Command String argument is required.");
@@ -32,7 +24,14 @@ async function runCommand({overrideCommand, safCLIPath}) {
         throw new Error("The SAF Action does not support the 'view heimdall' command. Please reference the documentation for other uses.");
     }
 
-    return saf.run(saf_command, resolve(safCLIPath));
+    const safBin = path.join(safRoot, 'bin', 'run');
+    const result = spawnSync(process.execPath, [safBin, ...saf_command], {
+        stdio: 'inherit',
+        cwd: process.env.GITHUB_WORKSPACE || process.cwd()
+    });
+
+    if (result.error) throw result.error;
+    if (result.status !== 0) process.exit(result.status);
 }
 
-module.exports = runCommand
+module.exports = runCommand;

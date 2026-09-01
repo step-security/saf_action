@@ -41,7 +41,7 @@ jobs:
         with:
           command_string: 'convert asff2hdf -i asff_sample.json -o asff_sample_hdf.json'
       - name: Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: success()
         with:
           name: asff
@@ -50,19 +50,16 @@ jobs:
 
 For more examples, check out [this workflow](https://github.com/step-security/saf_action/blob/main/.github/workflows/example-usages.yml).
 
-## Contributing, Issues and Support
-
-### Contributing
-
-Please feel free to look through our issues, make a fork and submit PRs and improvements. We love hearing from our end-users and the community and will be happy to engage with you on suggestions, updates, fixes or new capabilities.
+## Issues and Support
 
 ### Issues and Support
 
-Please feel free to contact us by **opening an issue** on the issue board, or, at [saf@mitre.org](mailto:saf@mitre.org) should you have any suggestions, questions or issues.
+Please feel free to contact us by **opening an issue** on the issue board, or, at [security@stepsecurity.io](mailto:security@stepsecurity.io) should you have any suggestions, questions or issues.
 
 ### NOTICE
 
 © 2022 The MITRE Corporation.
+Copyright 2026 StepSecurity
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 
